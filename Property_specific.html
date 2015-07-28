@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Property List</title>
+</head>
+
+<body>
+<a href="index.html">Home</a>
+<button id="auth-button" hidden>Authorize</button>
+
+<h1>Property List for Account --user is logged in</h1>
+
+<textarea cols="80" rows="20" id="query-output"></textarea>
+
+<script>
+
+  // Replace with your client ID from the developer console.
+  var CLIENT_ID = '219791845501-it7kgsija2fr04vvcf2lu7ne6pfq6r7a.apps.googleusercontent.com';
+
+  // Set authorized scope.
+  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
+
+
+  function authorize(event) {
+    // Handles the authorization flow.
+    // `immediate` should be false when invoked from the button click.
+    var useImmdiate = event ? false : true;
+    var authData = {
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      immediate: useImmdiate
+    };
+
+    gapi.auth.authorize(authData, function(response) {
+      var authButton = document.getElementById('auth-button');
+      if (response.error) {
+        authButton.hidden = false;
+      }
+      else {
+        authButton.hidden = true;
+        listProperties();
+      }
+    });
+  }
+
+
+  /*
+   * Note: This code assumes you have an authorized Analytics client object.
+   * See the Web Property Developer Guide for details.
+   */
+
+  /*
+   * Example 1:
+   * Requests a list of all properties for the authorized user.
+   */
+   function listProperties() {
+     // Load the Google Analytics client library.
+     gapi.client.load('analytics', 'v3').then(function() {
+
+       // Get a list of all web properties for this account
+       var request = gapi.client.analytics.management.webproperties.list({
+         'accountId': '2209662'
+       });
+       request.execute(printProperties);
+     });
+   }
+  /*
+   * Example 2:
+   * The results of the list method are passed as the results object.
+   * The following code shows how to iterate through them.
+   */
+  function printProperties(results) {
+    console.log("results object",results);
+    if (results && !results.error) {
+      var properties = results.items;
+      console.log("properties",properties);
+      var formattedJson = JSON.stringify(results);
+      console.log("formattedJson", formattedJson);
+      for (var i = 0, property; property = properties[i]; i++) {
+        console.log('Account Id: ' + property.accountId);
+        console.log('Property Id: ' + property.id);
+        console.log('Property Name: ' + property.name);
+        console.log('Property Profile Count: ' + property.profileCount);
+        console.log('Property Industry Vertical: ' + property.industryVertical);
+        console.log('Property Internal Id: ' + property.internalWebPropertyId);
+        console.log('Property Level: ' + property.level);
+        if (property.websiteUrl) {
+          console.log('Property URL: ' + property.websiteUrl);
+        }
+
+        console.log('Created: ' + property.created);
+        console.log('Updated: ' + property.updated);
+      }
+    }
+  }
+
+  // Add an event listener to the 'auth-button'.
+  document.getElementById('auth-button').addEventListener('click', authorize);
+</script>
+
+<script src="https://apis.google.com/js/client.js?onload=authorize&output=embed"></script>
+
+</body>
+</html>
