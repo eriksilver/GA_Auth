@@ -25,6 +25,9 @@
     console.log('event', event);
     // Handles the authorization flow.
     // `immediate` should be false when invoked from the button click.
+    // It has the form of: condition ? value-if-true : value-if-false
+    // Think of the ? as "then" and : as "else".
+    
     var useImmdiate = event ? false : true;
     console.log("useImmdiate",useImmdiate);
     var authData = {
