@@ -1,0 +1,34 @@
+// var report = new gapi.analytics.report.Data({
+//     // query: {
+//     //     'dimensions': 'ga:date',
+//     //     'metrics': 'ga:sessions',
+//     //     'start-date': '30daysAgo',
+//     //     'end-date': 'yesterday',
+//     // }
+//     query: {
+//         ids: 'ga:4067996', //Profile ID
+//         metrics: 'ga:users',
+//         dimensions: 'ga:date',
+//         prettyPrint: 'true',
+//         startDate: '2015-07-01',
+//         endDate: '2015-07-30'
+// //     }
+// });
+//
+// report.on('success', function(response) {
+//     console.log("runReport", response);
+//     reportData = response.query;
+//     console.log('reportData- INside of function',reportData);
+//     console.log('reportData- INside of function',reportData.metrics);
+//
+//     reportDataJSONSTR = JSON.stringify(reportData); //String notation
+//     console.log('reportDataJSONSTR',reportDataJSONSTR);
+// //     runKeen();
+//
+//
+// });
+// report.on('error'), function(response) {
+//     console.log("query error:", response.error.message)
+// }
+// report.execute();
+// }
