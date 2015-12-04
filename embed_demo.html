@@ -80,16 +80,28 @@ gapi.analytics.ready(function() {
 
   gapi.analytics.auth.on('success', function(response) {
     viewSelector.execute();
-  });
+});
+console.log("klsjfdksfj-1", viewSelector.ids);
+
 
   viewSelector.on('change', function(ids) {
-    var newIds = {
-      query: {
-        ids: ids
+      var newIds = {
+          query: {
+              ids: ids
+          }
       }
-    }
-    timeline.set(newIds).execute();
+
+      console.log("klsjfdksfj-2", viewSelector.ids);
+      console.log("klsjfdksfj", viewSelector.message);
+
+      viewSelector.on('success', function(s) {
+          console.dir(s);
+          console.log('viewselector success',s);
+      });
+      timeline.set(newIds).execute();
   });
+
+
 });
 </script>
 </body>
